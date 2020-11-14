@@ -1,8 +1,8 @@
 {
     "name": "dlg-projects/streamfile",
     "type": "library",
-    "description": "Stream file",
-    "keywords": ["stream"],
+    "description": "Stream file, use HTTP Partial Content",
+    "keywords": ["stream","easily","video","mp4","webm","mp3","Ogg","streaming","content-range","Partial Content"],
     "license": "MIT",
     "authors": [
         {
