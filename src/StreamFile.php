@@ -71,7 +71,7 @@ class StreamFile
             throw new Exception('File not found');
         }
         $this->setFileName(basename($file));
-        $this->setFileSize(filesize($file));
+        $this->setFileSize(intval(filesize($file)));
         $mimeType = mime_content_type($file);
         if ($mimeType !== false) {
             $this->setTypeMime($mimeType);
@@ -190,6 +190,9 @@ class StreamFile
      */
     public function startStream()
     {
+        if ($this->getFileSize() === 0) {
+            throw new Exception('File size not found !');
+        }
         ob_get_clean();
         $this->createHeaders();
         $this->readData($this->getRangeStart(), $this->getRangeEnd());
