@@ -1,4 +1,5 @@
-#StreamFile
+StreamFile
+==========
 
 Stream File is a package that displays the partial content of a file
 
@@ -36,6 +37,7 @@ $stream->startStream();
 - **setTypeMime** : define the type mime. It's automatically set by the constructor but you can change it
 - **startStream** : starts streaming the file
 
-#License
+License
+=======
 
 This library is released under the [MIT license](LICENSE).
