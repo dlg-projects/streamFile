@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace DlgProjects;
 
 use Exception;
+use function filemtime;
 
 class StreamFile
 {
@@ -12,30 +14,37 @@ class StreamFile
      * @var string
      */
     protected $file;
+
     /**
      * @var string
      */
     protected $fileName;
+
     /**
      * @var resource
      */
     protected $openFile;
+
     /**
      * @var int
      */
     protected $bufferSize = 524288;
+
     /**
      * @var int
      */
     protected $rangeStart = 0;
+
     /**
      * @var null|int
      */
     protected $rangeEnd = null;
+
     /**
      * @var int
      */
     protected $fileSize;
+
     /**
      * @var string
      */
@@ -99,10 +108,13 @@ class StreamFile
     }
 
     /**
-     * @return resource|bool
+     * @return resource
      */
     protected function getOpenFile()
     {
+        if (empty($this->openFile)) {
+            $this->openFile();
+        }
         return $this->openFile;
     }
 
@@ -186,6 +198,7 @@ class StreamFile
 
     /**
      * start the stream process
+     * @return void
      * @throws Exception
      */
     public function startStream()
@@ -196,11 +209,11 @@ class StreamFile
         ob_get_clean();
         $this->createHeaders();
         $this->readData($this->getRangeStart(), $this->getRangeEnd());
-
     }
 
     /**
      * open the file for reading
+     * @return void
      * @throws Exception
      */
     protected function openFile()
@@ -209,7 +222,7 @@ class StreamFile
             throw new Exception('File not found.');
         }
         $fp = fopen($this->file, 'rb');
-        if (!$fp) {
+        if (!$fp || !is_resource($fp)) {
             throw new Exception('File open failed.');
         }
         $this->openFile = $fp;
@@ -217,16 +230,16 @@ class StreamFile
 
     /**
      * close the file if it is open
+     * @return void
      */
     protected function closeFile()
     {
-        if ($this->getOpenFile()) {
-            fclose($this->getOpenFile());
-        }
+        fclose($this->getOpenFile());
     }
 
     /**
      * read the header and save the range, return http 416 if the range isn't satisfiable
+     * @return void
      */
     protected function readContentRange()
     {
@@ -248,6 +261,7 @@ class StreamFile
 
     /**
      * create headers
+     * @return void
      */
     protected function createHeaders()
     {
@@ -264,33 +278,28 @@ class StreamFile
 
         header("Cache-Control: max-age=2592000, public");
         header("Expires: " . gmdate('D, d M Y H:i:s', time() + 2592000) . ' GMT');
-        header("Last-Modified: " . gmdate('D, d M Y H:i:s', @filemtime($this->getFile())) . ' GMT');
+        header("Last-Modified: " . gmdate('D, d M Y H:i:s', intval(@filemtime($this->getFile()))) . ' GMT');
         header("Accept-Ranges: 0-" . ($this->getFileSize() - 1));
 
         header('Content-Length: ' . $streamLength);
         header('Content-Disposition: inline; filename="' . $this->getFileName() . '"');
-
     }
 
     /**
      * reads and display (echo) data from start point to end point
      * @param int $start Starting byte for reading
      * @param int $end end byte of reading
+     * @return void
      * @throws Exception
      */
     protected function readData(int $start, int $end)
     {
-        if (empty($this->getOpenFile())) {
-            $this->openFile();
-        }
-
         fseek($this->getOpenFile(), $start);
 
         $buffer = $this->getBufferSize();
         $i = $start;
 
-        $old_execution_time = ini_get('max_execution_time');
-        ini_set('max_execution_time', 0);
+        $old_execution_time = strval(ini_set('max_execution_time', '0') ?? '30');
 
         while (!feof($this->getOpenFile()) && $i <= $end) {
             $buffer = (($i + $buffer) > $end) ? ($buffer = $end - $i + 1) : $this->getBufferSize();
