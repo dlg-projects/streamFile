@@ -1,0 +1,21 @@
+{
+    "name": "dlg-projects/streamFile",
+    "type": "library",
+    "description": "Stream file",
+    "keywords": ["stream"],
+    "authors": [
+        {
+            "name": "Flavien DEHLINGER",
+            "email": "flavien@dehlinger.eu"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ext-fileinfo": "*"
+    },
+    "autoload": {
+        "psr-4" : {
+            "DlgProjects\\" : "src/"
+        }
+    }
+}
