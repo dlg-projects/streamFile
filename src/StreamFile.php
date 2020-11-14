@@ -65,7 +65,7 @@ class StreamFile
      * @return $this
      * @throws Exception
      */
-    protected function setFile(string $file): streamFile
+    protected function setFile(string $file): StreamFile
     {
         if (!is_file($file)) {
             throw new Exception('File not found');
@@ -90,7 +90,7 @@ class StreamFile
 
     /**
      * @param mixed $fileName
-     * @return streamFile
+     * @return StreamFile
      */
     public function setFileName($fileName)
     {
@@ -116,9 +116,9 @@ class StreamFile
 
     /**
      * @param int $bufferSize
-     * @return streamFile
+     * @return StreamFile
      */
-    public function setBufferSize(int $bufferSize): streamFile
+    public function setBufferSize(int $bufferSize): StreamFile
     {
         $this->bufferSize = $bufferSize;
         return $this;
@@ -134,9 +134,9 @@ class StreamFile
 
     /**
      * @param int $rangeStart
-     * @return streamFile
+     * @return StreamFile
      */
-    protected function setRangeStart(int $rangeStart): streamFile
+    protected function setRangeStart(int $rangeStart): StreamFile
     {
         $this->rangeStart = $rangeStart;
         return $this;
@@ -155,9 +155,9 @@ class StreamFile
 
     /**
      * @param int $rangeEnd
-     * @return streamFile
+     * @return StreamFile
      */
-    protected function setRangeEnd(int $rangeEnd): streamFile
+    protected function setRangeEnd(int $rangeEnd): StreamFile
     {
         if ($rangeEnd === 0) {
             $rangeEnd = $this->getFileSize() - 1;
@@ -176,9 +176,9 @@ class StreamFile
 
     /**
      * @param string $typeMime
-     * @return streamFile
+     * @return StreamFile
      */
-    public function setTypeMime(string $typeMime): streamFile
+    public function setTypeMime(string $typeMime): StreamFile
     {
         $this->typeMime = $typeMime;
         return $this;
@@ -316,9 +316,9 @@ class StreamFile
     /**
      * set file size in byte
      * @param int $fileSize
-     * @return streamFile
+     * @return StreamFile
      */
-    public function setFileSize(int $fileSize): streamFile
+    public function setFileSize(int $fileSize): StreamFile
     {
         $this->fileSize = $fileSize;
         return $this;
