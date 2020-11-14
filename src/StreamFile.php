@@ -5,7 +5,7 @@ namespace DlgProjects;
 
 use Exception;
 
-class streamFile
+class StreamFile
 {
 
     protected $file;
@@ -17,13 +17,14 @@ class streamFile
     protected $fileSize;
     protected $typeMime = 'video/mp4';
 
-    public function __construct($file)
+    /**
+     * StreamFile constructor.
+     * @param string $file File to broadcast
+     * @throws Exception
+     */
+    public function __construct(string $file)
     {
-        try {
-            $this->setFile($file);
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $this->setFile($file);
         $this->readContentRange();
     }
 
@@ -74,7 +75,7 @@ class streamFile
     }
 
     /**
-     * @return
+     * @return resource|bool
      */
     protected function getOpenFile()
     {
@@ -161,6 +162,7 @@ class streamFile
 
     /**
      * start the stream process
+     * @throws Exception
      */
     public function startStream()
     {
