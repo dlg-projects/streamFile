@@ -8,13 +8,37 @@ use Exception;
 class StreamFile
 {
 
+    /**
+     * @var string
+     */
     protected $file;
+    /**
+     * @var string
+     */
     protected $fileName;
+    /**
+     * @var resource
+     */
     protected $openFile;
+    /**
+     * @var int
+     */
     protected $bufferSize = 524288;
+    /**
+     * @var int
+     */
     protected $rangeStart = 0;
+    /**
+     * @var null|int
+     */
     protected $rangeEnd = null;
+    /**
+     * @var int
+     */
     protected $fileSize;
+    /**
+     * @var string
+     */
     protected $typeMime = 'video/mp4';
 
     /**
