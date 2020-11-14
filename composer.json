@@ -1,5 +1,5 @@
 {
-    "name": "dlg-projects/streamFile",
+    "name": "dlg-projects/streamfile",
     "type": "library",
     "description": "Stream file",
     "keywords": ["stream"],
